@@ -1,3 +1,4 @@
+// Sebastian Paulus 266446
 #include "ICMPSender.h"
 
 ICMPSender::ICMPSender(int pid_, int *sock)
@@ -5,10 +6,10 @@ ICMPSender::ICMPSender(int pid_, int *sock)
 
 }
 
-void ICMPSender::sendICMPEcho(std::string ip, uint32_t ttl) {
+void ICMPSender::sendICMPEcho(std::string ip, uint16_t UUID, uint32_t ttl) {
     setsockopt(*socket, IPPROTO_IP, IP_TTL, &ttl, sizeof(int));
 
-    icmphdr icmp_header = createICMPHeader(pid, 0);
+    icmphdr icmp_header = createICMPHeader(pid, UUID);
     sockaddr_in recipient = createRecipient(ip);
 
     ssize_t bytes_sent = sendto(*socket,
@@ -16,8 +17,6 @@ void ICMPSender::sendICMPEcho(std::string ip, uint32_t ttl) {
                                 0,
                                 (struct sockaddr *) &recipient, sizeof(recipient)
     );
-
-    std::cout << "bytes sent: " << bytes_sent << std::endl;
 }
 
 sockaddr_in ICMPSender::createRecipient(std::string ip_addr) {
@@ -26,11 +25,10 @@ sockaddr_in ICMPSender::createRecipient(std::string ip_addr) {
     rec.sin_family = AF_INET;
     inet_pton(AF_INET, ip_addr.c_str(), &rec.sin_addr);
 
-
     return rec;
 }
 
-icmphdr ICMPSender::createICMPHeader(int pid, int sequence) {
+icmphdr ICMPSender::createICMPHeader(int pid, uint16_t sequence) {
     icmphdr icmp_header;
     icmp_header.type = ICMP_ECHO;
     icmp_header.code = 0;

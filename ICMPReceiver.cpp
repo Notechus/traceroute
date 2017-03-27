@@ -1,7 +1,4 @@
-//
-// Created by Sebastian Paulus on 23/03/2017.
-//
-
+// Sebastian Paulus 266446
 #include "ICMPReceiver.h"
 
 ICMPReceiver::ICMPReceiver(int pid_, int *sock)
@@ -23,17 +20,11 @@ TPacket ICMPReceiver::receivePacket() {
     char sender_ip_str[20];
     inet_ntop(AF_INET, &(sender.sin_addr), sender_ip_str, sizeof(sender_ip_str));
 
-    std::cout << "Received ICMP REPLY from: " << sender_ip_str << std::endl;
-
     ip *ip_header = (ip *) buffer;
     ssize_t ip_header_len = 4 * ip_header->ip_hl;
 
     u_int8_t *icmp_packet = buffer + ip_header_len;
     icmphdr *icmp_header = (struct icmphdr *) icmp_packet;
 
-    std::cout << "icmp type: " << icmp_header->type << std::endl;
-    std::cout << "icmp checksum: " << icmp_header->checksum << std::endl;
-    std::cout << "icmp code: " << icmp_header->code << std::endl;
-
-    return TPacket();
+    return TPacket(pid, 0, 0, sender_ip_str, std::chrono::seconds(1)); //TODO FIXME temporary shit
 }

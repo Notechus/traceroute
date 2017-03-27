@@ -1,3 +1,4 @@
+// Sebastian Paulus 266446
 #pragma once
 #ifndef TRACEROUTE_HEADERS_H
 #define TRACEROUTE_HEADERS_H
@@ -11,6 +12,7 @@
 #include <string>
 #include <cerrno>
 #include <iostream>
+#include <vector>
 
 #if MAC_PLATFORM
 
