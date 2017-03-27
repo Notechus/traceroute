@@ -16,6 +16,8 @@ private:
     std::chrono::milliseconds millis;
 
 public:
+    TPacket();
+
     TPacket(int pid_, int ttl_, int sequence_, std::string from_, std::chrono::milliseconds millis_);
 
     int getPid() const;

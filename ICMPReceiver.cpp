@@ -26,5 +26,13 @@ TPacket ICMPReceiver::receivePacket() {
     u_int8_t *icmp_packet = buffer + ip_header_len;
     icmphdr *icmp_header = (struct icmphdr *) icmp_packet;
 
-    return TPacket(pid, 0, 0, sender_ip_str, std::chrono::seconds(1)); //TODO FIXME temporary shit
+    if (icmp_header->type == ICMP_ECHOREPLY) {
+        return TPacket(pid, icmp_header->un.echo.sequence / 3, icmp_header->un.echo.sequence, sender_ip_str,
+                       std::chrono::seconds(1)); //TODO FIXME temporary shit
+    }
+    if (icmp_header->type == ICMP_TIME_EXCEEDED) {
+        return TPacket(pid, icmp_header->un.echo.sequence / 3, icmp_header->un.echo.sequence, sender_ip_str,
+                       std::chrono::seconds(1)); //TODO FIXME temporary shit
+    }
+    return TPacket();
 }

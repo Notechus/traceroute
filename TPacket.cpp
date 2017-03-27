@@ -1,6 +1,11 @@
 // Sebastian Paulus 266446
 #include "TPacket.h"
 
+TPacket::TPacket() :
+        pid(-1), ttl(-1), sequence(-1), ipAddress(""), millis(0) {
+
+}
+
 TPacket::TPacket(int pid_, int ttl_, int sequence_, std::string from_, std::chrono::milliseconds millis_) :
         pid(pid_), ttl(ttl_), sequence(sequence_), ipAddress(from_), millis(millis_) {
 
