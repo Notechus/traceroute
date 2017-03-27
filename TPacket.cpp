@@ -6,7 +6,7 @@ TPacket::TPacket() :
 
 }
 
-TPacket::TPacket(int pid_, int ttl_, int sequence_, std::string from_, std::chrono::milliseconds millis_) :
+TPacket::TPacket(int pid_, int ttl_, int sequence_, std::string from_, int millis_) :
         pid(pid_), ttl(ttl_), sequence(sequence_), ipAddress(from_), millis(millis_) {
 
 }
@@ -27,19 +27,6 @@ void TPacket::setIpAddress(const std::string &ipAddress_) {
     TPacket::ipAddress = ipAddress_;
 }
 
-const std::chrono::milliseconds &TPacket::getMillis() const {
-    return millis;
-}
-
-void TPacket::setMillis(const std::chrono::milliseconds &millis) {
-    TPacket::millis = millis;
-}
-
-std::ostream &operator<<(std::ostream &os, const TPacket &packet) {
-    os << "pid: " << packet.pid << " ipAddress: " << packet.ipAddress << " millis: " << packet.millis.count();
-    return os;
-}
-
 int TPacket::getTtl() const {
     return ttl;
 }
@@ -54,4 +41,18 @@ int TPacket::getSequence() const {
 
 void TPacket::setSequence(int sequence) {
     TPacket::sequence = sequence;
+}
+
+std::ostream &operator<<(std::ostream &os, const TPacket &packet) {
+    os << "pid: " << packet.pid << " ttl: " << packet.ttl << " sequence: " << packet.sequence << " ipAddress: "
+       << packet.ipAddress << " millis: " << packet.millis;
+    return os;
+}
+
+int TPacket::getMillis() const {
+    return millis;
+}
+
+void TPacket::setMillis(int millis) {
+    TPacket::millis = millis;
 }

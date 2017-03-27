@@ -13,12 +13,12 @@ private:
     int ttl;
     int sequence;
     std::string ipAddress;
-    std::chrono::milliseconds millis;
+    int millis;
 
 public:
     TPacket();
 
-    TPacket(int pid_, int ttl_, int sequence_, std::string from_, std::chrono::milliseconds millis_);
+    TPacket(int pid_, int ttl_, int sequence_, std::string from_, int millis_ = 0);
 
     int getPid() const;
 
@@ -28,9 +28,9 @@ public:
 
     void setIpAddress(const std::string &ipAddress_);
 
-    const std::chrono::milliseconds &getMillis() const;
+    int getMillis() const;
 
-    void setMillis(const std::chrono::milliseconds &millis);
+    void setMillis(int millis);
 
     int getTtl() const;
 
